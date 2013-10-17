@@ -16,7 +16,7 @@
   fieldset{width:30%;margin:25px auto;position:relative;}
   input, label{padding:0 .5em;line-height:2em;}
   label{position:absolute;background-color:#fff;border-top-left-radius:5px; border-bottom-left-radius:5px;
-    transition:all 5s ease .2s;
+    transition:all .5s ease .2s;
   }
   label:after{
     content:'';
@@ -37,9 +37,11 @@
   input:focus{border-color:transparent;outline:none;}
   input:valid{border:2px solid #2DAA29;color:#2DAA29;}
   
-  input:valid + label{opacity:0;}
+  input:valid + label{opacity:0;-webkit-transform:rotate(180deg);margin-left:0px;}
   
-  
+  :invalid ~ input[type=submit]:hover{
+    -webkit-animation:shake .1s linear .1s infinite;
+  }
   
   input[type=submit]{
     font-size:1.5em;
@@ -55,6 +57,12 @@
     inset 0 1px rgba(255, 255, 255, .5);
   }
   ::-webkit-input-placeholder {color: #999;font-style:italic;font-size:.7em;}
+  
+  @-webkit-keyframes shake{
+  from{margin-left:5px;}
+  50%{margin-left:0px;}
+  to{margin-left:5px;}
+  }
 </style>
 </head>
 <body>

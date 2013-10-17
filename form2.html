@@ -15,7 +15,9 @@
 	body{font-family: 'Montserrat Alternates', serif;font-size:.9em;min-height:600px;background-color:#607E88;background-image:linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, .6));}
   fieldset{width:30%;margin:25px auto;position:relative;}
   input, label{padding:0 .5em;line-height:2em;}
-  label{position:absolute;background-color:#fff;border-top-left-radius:5px; border-bottom-left-radius:5px;}
+  label{position:absolute;background-color:#fff;border-top-left-radius:5px; border-bottom-left-radius:5px;
+    transition:all 5s ease .2s;
+  }
   label:after{
     content:'';
     width:0;height:0;
@@ -34,6 +36,10 @@
   input:invalid{border:2px dotted #CA605E;}
   input:focus{border-color:transparent;outline:none;}
   input:valid{border:2px solid #2DAA29;color:#2DAA29;}
+  
+  input:valid + label{opacity:0;}
+  
+  
   
   input[type=submit]{
     font-size:1.5em;

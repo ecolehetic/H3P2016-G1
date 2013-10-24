@@ -1,4 +1,4 @@
-var player= function (params){
+var player= function(params){
 	var self=this;
 	self.video=document.querySelector(params.media);
 	self.controller=document.querySelector(params.controller);
@@ -11,11 +11,15 @@ var player= function (params){
 		
 		if(self.video.paused){
 			self.video.play();
-			params.played.call();
+			if(typeof params.played==="function"){
+					params.played.call();
+			}
 			
 		}else{
 			self.video.pause();
-			params.paused.call();
+			if(typeof params.paused==="function"){
+				params.paused.call();
+			}
 		}
 	}
 	
@@ -23,7 +27,9 @@ var player= function (params){
 		var x=e.offsetX;
 		var newTime=x*self.video.duration/this.offsetWidth;
 		self.video.currentTime=newTime;
-		params.moved.call();
+		if(typeof params.paused==="function"){
+			params.paused.call();
+		}
 	}
 	
 	
@@ -33,12 +39,16 @@ var player= function (params){
 
 		var bufferWidth=this.buffered.end(0)*100/this.duration;
 		self.buffer.style.width=bufferWidth+'%';
+		
 	}
 	
 	//si canplaythrough
 	self.video.addEventListener('canplaythrough',function(){
+
 		//on appelle le callback loaded en passant self en argument.
-		params.loaded.call(this,self);
+		if(typeof params.loaded==="function"){
+			params.loaded.call(this,self);
+		}
 	},false);
 	self.video.addEventListener('timeupdate',self.updateProgress,false);
 

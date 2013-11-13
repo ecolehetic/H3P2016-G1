@@ -21,7 +21,7 @@ var board={
 		var date=d.getFullYear()+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+('0'+d.getDate()).slice(-2);
 		var dateSpan=$('<span>').addClass('date').html(date);
 		var textSpan=$('<span>').addClass('text').html(datas.title);
-		var deleteButton=$('<a>').addClass('deleteButton').attr('href','').text('[delete]');
+		var deleteButton=$('<a>').addClass('deleteButton').attr('href','').attr('data-key',datas.date).text('[delete]');
 		div.append(dateSpan,textSpan,deleteButton);
 		$(this.params.board).append(div);
 		this.params.rendered.call(this);
@@ -31,6 +31,10 @@ var board={
 		for(i in localStorage){
 			this.render(JSON.parse(localStorage.getItem(i)));
 		}
+	},
+	
+	delete : function(key){
+		localStorage.removeItem(key);
 	}
 }
 

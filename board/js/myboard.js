@@ -6,13 +6,15 @@ board.init({
 });
 
 localize.init({
-	map : '#map',
+	map : '#map div',
 	localized : function(pos){
 		localize.render(pos);
-		$('#map').toggleClass('on');
+		$('#map, .loader').toggleClass('on');
+	},
+	found : function(pos){
+		
 	}
 })
-
 
 board.checkout();
 
@@ -30,14 +32,31 @@ $('#addCard').on('submit',function(e){
 		var newDate=new Date(date).getTime();
 	}
 	//var newDate=!date?new Date().getTime():new Date(date).getTime();
-
 	var datas={title:name,date:newDate};
 	board.record(datas);
+
 });
 
 $('#addLocation').on('click',function(e){
 	e.preventDefault();
 	localize.getUserLocation();
+	$('.loader').toggleClass('on');
+});
+
+$('#geocoder').on('submit',function(e){
+	e.preventDefault();
+	var address=$('input[name=address]').val();
+	if(!address){
+		return;
+	}
+	localize.find(address);
+});
+
+$('.deleteButton').on('click',function(e){ 
+	e.preventDefault();
+	var key=$(this).data('key');
+	board.delete(key);
+	$(this).parent('.card').remove();
 });
 
 

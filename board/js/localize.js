@@ -3,7 +3,7 @@ var localize={
 	defaults : {
 		map : '#mapCanvas',
 		localized : function(){},
-		found : function(){}
+		found : function(){},
 	},
 	
 	
@@ -54,6 +54,24 @@ var localize={
 				localize.params.found.call(this,null);
 			}
 		});
+		
+	},
+	itinerary : function(datas,miniMap){
+		var origin = new google.maps.LatLng(datas.userPos.latitude, datas.userPos.longitude);
+		var destination = new google.maps.LatLng(datas.destPos.latitude, datas.destPos.longitude);
+		var settings = {mapTypeId: google.maps.MapTypeId.ROADMAP};
+		var bounds = new google.maps.LatLngBounds (origin,destination); 
+		var map = new google.maps.Map(miniMap, settings);
+		map.fitBounds(bounds);
+		
+		var display = new google.maps.DirectionsRenderer({map : map});
+    var request = {origin : origin,destination : destination,travelMode : google.maps.DirectionsTravelMode.DRIVING}
+    var direction = new google.maps.DirectionsService();
+    direction.route(request, function(response, status){
+				if(status == google.maps.DirectionsStatus.OK){
+        		display.setDirections(response); 
+     		}
+   	});
 		
 	}
 	

@@ -1,18 +1,32 @@
+//applicationCache.update();
+// applicationCache.addEventListener("updateready", function(){
+// 	applicationCache.swapCache();
+// 	console.log('appCache reloaded');
+// 	window.location.reload();
+// }, false);
+
+var datas={};
+
 board.init({
 	board : '#board',
 	recorded : function(datas){
 		this.render(datas);
+	},
+	rendered : function(){
+		$('input[name]').val('');
+		$('#map').removeClass('on');
 	}
 });
 
 localize.init({
 	map : '#map div',
 	localized : function(pos){
+		datas.userPos={latitude:pos.latitude,longitude:pos.longitude}; 
 		localize.render(pos);
 		$('#map, .loader').toggleClass('on');
 	},
 	found : function(pos){
-		
+	 datas.destPos={latitude:pos.lat(),longitude:pos.lng()}
 	}
 })
 
@@ -32,7 +46,9 @@ $('#addCard').on('submit',function(e){
 		var newDate=new Date(date).getTime();
 	}
 	//var newDate=!date?new Date().getTime():new Date(date).getTime();
-	var datas={title:name,date:newDate};
+	datas.title=name;
+	datas.date=newDate;
+	console.log(datas);
 	board.record(datas);
 
 });
@@ -52,7 +68,7 @@ $('#geocoder').on('submit',function(e){
 	localize.find(address);
 });
 
-$('.deleteButton').on('click',function(e){ 
+$('#board').on('click','.deleteButton',function(e){ 
 	e.preventDefault();
 	var key=$(this).data('key');
 	board.delete(key);

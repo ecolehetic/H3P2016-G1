@@ -23,6 +23,8 @@ var board={
 		var textSpan=$('<span>').addClass('text').html(datas.title);
 		var deleteButton=$('<a>').addClass('deleteButton').attr('href','').attr('data-key',datas.date).text('[delete]');
 		div.append(dateSpan,textSpan,deleteButton);
+		var map=$('<div>').addClass('map');
+		div.append(map);
 		$(this.params.board).append(div);
 		this.params.rendered.call(this);
 	},
